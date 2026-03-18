@@ -871,35 +871,11 @@
                 }, 20000);
             }
 
-            // Tạo heart mỗi 3 giây
-            setInterval(createFloatingHeart, 3000);
+            // Tạo heart mỗi 10 giây
+            setInterval(createFloatingHeart, 10000);
 
             // Start auto play
             startAutoPlay();
-
-            // Preload next image để chuyển trang mượt hơn
-            function preloadImages() {
-                const images = [
-                    'https://images.unsplash.com/photo-1519225421980-715cb0215aed',
-                    'https://images.unsplash.com/photo-1500648767791-00dcc994a43e',
-                    'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e',
-                    'https://images.unsplash.com/photo-1519741497674-611481863552',
-                    'https://images.unsplash.com/photo-1520854221256-17451cc331bf',
-                    'https://images.unsplash.com/photo-1469371670807-013ccf25f16a',
-                    'https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8',
-                    'https://images.unsplash.com/photo-1511285560929-80b456fea0bc',
-                    'https://images.unsplash.com/photo-1522673607200-164d1b6ce486',
-                    'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2',
-                    'https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6'
-                ];
-
-                images.forEach(src => {
-                    const img = new Image();
-                    img.src = src + '?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80';
-                });
-            }
-
-            preloadImages();
         });
     </script>
 </body>
