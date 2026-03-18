@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love Story Introduction - Ngày Cưới</title>
+    <!-- Font chữ sang trọng -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- Font Awesome cho icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #fff9f9 0%, #ffeaea 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .slideshow-container {
+            max-width: 1200px;
+            width: 100%;
+            position: relative;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.15), 0 10px 30px rgba(180, 50, 50, 0.1);
+            border-radius: 30px;
+            overflow: hidden;
+            background: white;
+        }
+
+        /* Slide wrapper */
+        .slides-wrapper {
+            position: relative;
+            width: 100%;
+            min-height: 600px;
+            background: #fff;
+        }
+
+        /* Individual slide */
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.8s ease-in-out, visibility 0.8s ease-in-out;
+            padding: 50px 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            position: relative;
+        }
+
+        /* Overlay cho slide có background image */
+        .slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,240,245,0.85) 100%);
+            z-index: 1;
+        }
+
+        .slide > * {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Decorative elements */
+        .decor-top {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, #fff0f0, #ff6b6b, #d44b4b, #ff6b6b, #fff0f0);
+            z-index: 10;
+        }
+
+        .decor-corner {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            border: 2px solid rgba(212, 75, 75, 0.2);
+            border-radius: 30px;
+            z-index: 5;
+        }
+
+        .decor-corner-tl {
+            top: 20px;
+            left: 20px;
+            border-right: none;
+            border-bottom: none;
+        }
+
+        .decor-corner-br {
+            bottom: 20px;
+            right: 20px;
+            border-left: none;
+            border-top: none;
+        }
+
+        /* Typography */
+        .slide-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3.2rem;
+            font-weight: 600;
+            color: #8b3a3a;
+            margin-bottom: 25px;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 4px rgba(255,255,255,0.8);
+            position: relative;
+            display: inline-block;
+        }
+
+        .slide-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 80px;
+            height: 2px;
+            background: linear-gradient(90deg, #ffb6b6, #d44b4b);
+        }
+
+        .slide-content {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            color: #5a3e3e;
+            margin-bottom: 30px;
+            max-width: 80%;
+            font-weight: 300;
+            font-style: italic;
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(5px);
+            padding: 20px 30px;
+            border-radius: 15px;
+            border-left: 4px solid #d44b4b;
+        }
+
+        .slide-narration {
+            font-size: 1.4rem;
+            line-height: 1.8;
+            color: #2c1e1e;
+            font-weight: 400;
+            margin-bottom: 20px;
+            font-family: 'Cormorant Garamond', serif;
+            background: rgba(255, 255, 255, 0.7);
+            padding: 25px 35px;
+            border-radius: 50px 50px 50px 0;
+            box-shadow: 0 10px 30px rgba(212, 75, 75, 0.1);
+            border: 1px solid rgba(212, 75, 75, 0.2);
+            max-width: 70%;
+        }
+
+        .image-placeholder {
+            margin: 20px 0;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            max-width: 500px;
+            border: 3px solid white;
+            position: relative;
+        }
+
+        .image-placeholder img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+
+        .image-placeholder:hover img {
+            transform: scale(1.02);
+        }
+
+        .placeholder-text {
+            background: linear-gradient(135deg, #ffd9d9, #ffe4e4);
+            padding: 40px;
+            text-align: center;
+            color: #a14b4b;
+            font-size: 1.2rem;
+            border-radius: 15px;
+            border: 2px dashed #d44b4b;
+        }
+
+        .placeholder-text i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: #d44b4b;
+        }
+
+        /* Layout helpers */
+        .flex-row {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        /* Controls */
+        .nav-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            padding: 20px 0 30px;
+            background: white;
+        }
+
+        .nav-btn {
+            background: white;
+            border: none;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.8rem;
+            color: #b34b4b;
+            box-shadow: 0 5px 15px rgba(212, 75, 75, 0.2);
+            transition: all 0.3s ease;
+            border: 2px solid #ffdbdb;
+        }
+
+        .nav-btn:hover {
+            background: #d44b4b;
+            color: white;
+            border-color: #d44b4b;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(212, 75, 75, 0.4);
+        }
+
+        .dots-container {
+            display: flex;
+            gap: 15px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #ffc2c2;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .dot.active {
+            background: #d44b4b;
+            transform: scale(1.3);
+            box-shadow: 0 0 15px #d44b4b;
+        }
+
+        .dot:hover {
+            background: #ff8a8a;
+        }
+
+        /* Slide specific backgrounds */
+        #slide1 {
+            background: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80') center/cover;
+        }
+        #slide2 {
+            background: url('https://images.unsplash.com/photo-1523438885200-e635ba2c371e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80') center/cover;
+        }
+        #slide3 {
+            background: url('https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80') center/cover;
+        }
+        #slide4 {
+            background: url('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80') center/cover;
+        }
+        #slide5 {
+            background: url('https://images.unsplash.com/photo-1469371670807-013ccf25f16a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80') center/cover;
+        }
+
+        /* Heart animation */
+        .heart {
+            position: absolute;
+            font-size: 20px;
+            color: #d44b4b;
+            opacity: 0.3;
+            animation: float 6s infinite;
+            z-index: 0;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .slide {
+                padding: 30px 20px;
+            }
+            .slide-title {
+                font-size: 2.2rem;
+            }
+            .slide-content, .slide-narration {
+                max-width: 100%;
+                font-size: 1.1rem;
+                padding: 15px;
+            }
+            .flex-row {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="slideshow-container">
+        <div class="decor-top"></div>
+        <div class="decor-corner decor-corner-tl"></div>
+        <div class="decor-corner decor-corner-br"></div>
+        
+        <!-- Floating hearts -->
+        <div class="heart" style="top: 10%; left: 5%;"><i class="fas fa-heart"></i></div>
+        <div class="heart" style="top: 20%; right: 8%; font-size: 30px;"><i class="fas fa-heart"></i></div>
+        <div class="heart" style="bottom: 15%; left: 10%; font-size: 25px;"><i class="fas fa-heart"></i></div>
+        <div class="heart" style="bottom: 25%; right: 15%;"><i class="fas fa-heart"></i></div>
+
+        <div class="slides-wrapper">
+            <!-- Slide 1: Khởi đầu định mệnh -->
+            <div class="slide active" id="slide1">
+                <h2 class="slide-title">Mọi chuyện bắt đầu từ một khoảnh khắc...</h2>
+                <div class="flex-row">
+                    <div class="image-placeholder">
+                        <img src="https://images.unsplash.com/photo-1444703686981-a3abbc4d4fe3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="Bình minh trên con đường">
+                    </div>
+                    <div class="slide-narration">
+                        <i class="fas fa-quote-left" style="color: #d44b4b; opacity: 0.5; margin-right: 10px;"></i>
+                        Có những cuộc gặp gỡ tưởng chừng tình cờ, nhưng lại được sắp đặt bởi định mệnh.
+                    </div>
+                </div>
+                <div class="slide-content">
+                    <i class="fas fa-sun" style="color: #ff8a8a; margin-right: 10px;"></i>
+                    Khi bình minh len lỏi qua những tán cây, một con đường mở ra - con đường dẫn chúng ta đến với nhau.
+                </div>
+            </div>
+
+            <!-- Slide 2: Lần gặp gỡ đầu tiên -->
+            <div class="slide" id="slide2">
+                <h2 class="slide-title">Ánh mắt đầu tiên</h2>
+                <div class="flex-row" style="justify-content: flex-end;">
+                    <div class="slide-narration" style="max-width: 60%;">
+                        <i class="fas fa-quote-left" style="color: #d44b4b; opacity: 0.5; margin-right: 10px;"></i>
+                        Từ khoảnh khắc ấy, hai trái tim đã tìm thấy nhịp đập chung.
+                    </div>
+                </div>
+                <div class="flex-row">
+                    <div class="image-placeholder" style="max-width: 400px;">
+                        <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="Ánh mắt đầu tiên">
+                    </div>
+                    <div class="slide-content" style="max-width: 300px;">
+                        <i class="fas fa-eye" style="color: #d44b4b; margin-right: 10px;"></i>
+                        Một ánh nhìn, một nụ cười... và thế giới ngừng quay.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 3: Hành trình yêu thương -->
+            <div class="slide" id="slide3">
+                <h2 class="slide-title">Tình yêu lớn dần</h2>
+                <div class="flex-row">
+                    <div class="slide-narration">
+                        <i class="fas fa-quote-left" style="color: #d44b4b; opacity: 0.5; margin-right: 10px;"></i>
+                        Qua tháng ngày, tình yêu không chỉ là cảm xúc, mà còn là sự đồng hành, sẻ chia và nâng đỡ.
+                    </div>
+                </div>
+                <div class="flex-row" style="justify-content: space-between;">
+                    <div class="image-placeholder" style="max-width: 200px;">
+                        <img src="https://images.unsplash.com/photo-1529333320936-e2193f4e3b32?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="Kỷ niệm">
+                    </div>
+                    <div class="image-placeholder" style="max-width: 200px;">
+                        <img src="https://images.unsplash.com/photo-1511895426328-dc8714191300?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="Chuyến đi">
+                    </div>
+                    <div class="image-placeholder" style="max-width: 200px;">
+                        <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="Khoảnh khắc đời thường">
+                    </div>
+                </div>
+                <div class="slide-content" style="margin-top: 20px;">
+                    <i class="fas fa-heart" style="color: #d44b4b;"></i> Những nụ cười <i class="fas fa-heart" style="color: #d44b4b; margin-left: 15px;"></i> Những chuyến đi <i class="fas fa-heart" style="color: #d44b4b; margin-left: 15px;"></i> Những ngày bình yên
+                </div>
+            </div>
+
+            <!-- Slide 4: Lời hứa trọn đời -->
+            <div class="slide" id="slide4">
+                <h2 class="slide-title">Chọn nhau – cho cả cuộc đời</h2>
+                <div class="flex-row" style="justify-content: center;">
+                    <div class="image-placeholder" style="max-width: 500px;">
+                        <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="Đôi tay nắm chặt">
+                    </div>
+                </div>
+                <div class="flex-row" style="justify-content: space-between; margin-top: 20px;">
+                    <div class="slide-narration" style="max-width: 60%;">
+                        <i class="fas fa-quote-left" style="color: #d44b4b; opacity: 0.5; margin-right: 10px;"></i>
+                        Hôm nay, trước gia đình và bạn bè, họ chọn nhau – không chỉ cho một ngày, mà cho cả cuộc đời.
+                    </div>
+                    <div class="slide-content" style="max-width: 30%;">
+                        <i class="fas fa-ring" style="color: #d44b4b; font-size: 2rem;"></i>
+                        <p style="margin-top: 10px;">Lời hứa vĩnh cửu</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 5: Cao trào & Xuất hiện -->
+            <div class="slide" id="slide5">
+                <h2 class="slide-title" style="font-size: 4rem; color: #a13b3b;">Nhân vật chính của câu chuyện</h2>
+                <div class="flex-row" style="justify-content: center; text-align: center;">
+                    <div class="slide-narration" style="max-width: 80%; font-size: 2rem; background: rgba(255,255,255,0.9);">
+                        <i class="fas fa-quote-left" style="color: #d44b4b; opacity: 0.5;"></i>
+                        Và giờ đây, hãy cùng chào đón cô dâu và chú rể – nhân vật chính của câu chuyện tình yêu này.
+                    </div>
+                </div>
+                <div style="text-align: center; margin-top: 40px;">
+                    <i class="fas fa-star" style="color: #ffd700; font-size: 2rem; margin: 0 10px;"></i>
+                    <i class="fas fa-heart" style="color: #d44b4b; font-size: 3rem;"></i>
+                    <i class="fas fa-star" style="color: #ffd700; font-size: 2rem; margin: 0 10px;"></i>
+                </div>
+                <div class="slide-content text-center" style="max-width: 100%; background: transparent; border: none;">
+                    <p style="font-size: 2.5rem; font-weight: 600; color: #8b3a3a;">✨ CHÚ RỂ & CÔ DÂU ✨</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation controls -->
+        <div class="nav-controls">
+            <button class="nav-btn" id="prevBtn"><i class="fas fa-chevron-left"></i></button>
+            <div class="dots-container" id="dotsContainer">
+                <span class="dot active" data-index="0"></span>
+                <span class="dot" data-index="1"></span>
+                <span class="dot" data-index="2"></span>
+                <span class="dot" data-index="3"></span>
+                <span class="dot" data-index="4"></span>
+            </div>
+            <button class="nav-btn" id="nextBtn"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const slides = document.querySelectorAll('.slide');
+            const dots = document.querySelectorAll('.dot');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            let currentSlide = 0;
+            const totalSlides = slides.length;
+
+            function showSlide(index) {
+                // Loop around if out of bounds
+                if (index < 0) index = totalSlides - 1;
+                if (index >= totalSlides) index = 0;
+
+                // Hide all slides
+                slides.forEach(slide => {
+                    slide.classList.remove('active');
+                });
+
+                // Show current slide
+                slides[index].classList.add('active');
+
+                // Update dots
+                dots.forEach((dot, i) => {
+                    dot.classList.toggle('active', i === index);
+                });
+
+                currentSlide = index;
+            }
+
+            // Event listeners for buttons
+            prevBtn.addEventListener('click', () => {
+                showSlide(currentSlide - 1);
+            });
+
+            nextBtn.addEventListener('click', () => {
+                showSlide(currentSlide + 1);
+            });
+
+            // Event listeners for dots
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    showSlide(index);
+                });
+            });
+
+            // Auto advance slides every 8 seconds (optional)
+            setInterval(() => {
+                showSlide(currentSlide + 1);
+            }, 8000);
+        });
+    </script>
+</body>
+</html>
