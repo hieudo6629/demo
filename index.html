@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Love Story Introduction - Ngày Cưới</title>
-    <!-- Font chữ sang trọng -->
+    <title>Lễ thành hôn - Đinh Trọng Hùng & Lương Thanh Huyền</title>
+    <!-- Font chữ thanh lịch -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -19,33 +19,28 @@
 
         body {
             font-family: 'Montserrat', sans-serif;
-            background: linear-gradient(135deg, #fff9f9 0%, #ffeaea 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .slideshow-container {
-            max-width: 1200px;
-            width: 100%;
-            position: relative;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.15), 0 10px 30px rgba(180, 50, 50, 0.1);
-            border-radius: 30px;
+            background: #fef9f9;
+            color: #4a4a4a;
             overflow: hidden;
-            background: white;
+            height: 100vh;
         }
 
-        /* Slide wrapper */
-        .slides-wrapper {
-            position: relative;
+        /* Container chính */
+        .wedding-site {
             width: 100%;
-            min-height: 600px;
-            background: #fff;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
         }
 
-        /* Individual slide */
+        /* Slides container */
+        .slides-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        /* Mỗi trang là một slide full-screen */
         .slide {
             position: absolute;
             top: 0;
@@ -54,14 +49,13 @@
             height: 100%;
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.8s ease-in-out, visibility 0.8s ease-in-out;
-            padding: 50px 60px;
+            transition: opacity 1.5s cubic-bezier(0.4, 0, 0.2, 1), visibility 1.5s ease;
             display: flex;
-            flex-direction: column;
+            align-items: center;
             justify-content: center;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #fff9f9 0%, #fff0f5 100%);
+            overflow: hidden;
         }
 
         .slide.active {
@@ -70,7 +64,62 @@
             position: relative;
         }
 
-        /* Overlay cho slide có background image */
+        /* Hiệu ứng chuyển trang ngẫu nhiên */
+        .slide.transition-fade {
+            animation: fadeTransition 1.5s ease;
+        }
+
+        .slide.transition-slide-left {
+            animation: slideLeftTransition 1.5s ease;
+        }
+
+        .slide.transition-slide-right {
+            animation: slideRightTransition 1.5s ease;
+        }
+
+        .slide.transition-zoom {
+            animation: zoomTransition 1.5s ease;
+        }
+
+        .slide.transition-rotate {
+            animation: rotateTransition 1.5s ease;
+        }
+
+        .slide.transition-flip {
+            animation: flipTransition 1.5s ease;
+        }
+
+        @keyframes fadeTransition {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes slideLeftTransition {
+            0% { transform: translateX(100%); opacity: 0; }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes slideRightTransition {
+            0% { transform: translateX(-100%); opacity: 0; }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes zoomTransition {
+            0% { transform: scale(0.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes rotateTransition {
+            0% { transform: rotate(-10deg) scale(0.8); opacity: 0; }
+            100% { transform: rotate(0) scale(1); opacity: 1; }
+        }
+
+        @keyframes flipTransition {
+            0% { transform: rotateY(90deg); opacity: 0; }
+            100% { transform: rotateY(0); opacity: 1; }
+        }
+
+        /* Hiệu ứng trang trí nền */
         .slide::before {
             content: '';
             position: absolute;
@@ -78,386 +127,612 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,240,245,0.85) 100%);
-            z-index: 1;
+            background: url('data:image/svg+xml;utf8,<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><path d="M30 5 L55 30 L30 55 L5 30 Z" fill="none" stroke="rgba(255,215,0,0.05)" stroke-width="1"/><circle cx="30" cy="30" r="20" fill="none" stroke="rgba(255,182,193,0.05)" stroke-width="1"/></svg>');
+            background-size: 100px 100px;
+            opacity: 0.5;
+            pointer-events: none;
         }
 
-        .slide > * {
+        /* Container nội dung */
+        .content-container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
             position: relative;
             z-index: 2;
-        }
-
-        /* Decorative elements */
-        .decor-top {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 6px;
-            background: linear-gradient(90deg, #fff0f0, #ff6b6b, #d44b4b, #ff6b6b, #fff0f0);
-            z-index: 10;
-        }
-
-        .decor-corner {
-            position: absolute;
-            width: 150px;
-            height: 150px;
-            border: 2px solid rgba(212, 75, 75, 0.2);
-            border-radius: 30px;
-            z-index: 5;
-        }
-
-        .decor-corner-tl {
-            top: 20px;
-            left: 20px;
-            border-right: none;
-            border-bottom: none;
-        }
-
-        .decor-corner-br {
-            bottom: 20px;
-            right: 20px;
-            border-left: none;
-            border-top: none;
-        }
-
-        /* Typography */
-        .slide-title {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 3.2rem;
-            font-weight: 600;
-            color: #8b3a3a;
-            margin-bottom: 25px;
-            letter-spacing: 2px;
-            text-shadow: 2px 2px 4px rgba(255,255,255,0.8);
-            position: relative;
-            display: inline-block;
-        }
-
-        .slide-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 0;
-            width: 80px;
-            height: 2px;
-            background: linear-gradient(90deg, #ffb6b6, #d44b4b);
-        }
-
-        .slide-content {
-            font-size: 1.3rem;
-            line-height: 1.8;
-            color: #5a3e3e;
-            margin-bottom: 30px;
-            max-width: 80%;
-            font-weight: 300;
-            font-style: italic;
-            background: rgba(255, 255, 255, 0.5);
-            backdrop-filter: blur(5px);
-            padding: 20px 30px;
-            border-radius: 15px;
-            border-left: 4px solid #d44b4b;
-        }
-
-        .slide-narration {
-            font-size: 1.4rem;
-            line-height: 1.8;
-            color: #2c1e1e;
-            font-weight: 400;
-            margin-bottom: 20px;
-            font-family: 'Cormorant Garamond', serif;
             background: rgba(255, 255, 255, 0.7);
-            padding: 25px 35px;
-            border-radius: 50px 50px 50px 0;
-            box-shadow: 0 10px 30px rgba(212, 75, 75, 0.1);
-            border: 1px solid rgba(212, 75, 75, 0.2);
-            max-width: 70%;
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            padding: 40px 50px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05), 0 10px 20px rgba(255,215,215,0.2);
+            border: 1px solid rgba(255,215,0,0.2);
         }
 
-        .image-placeholder {
-            margin: 20px 0;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            max-width: 500px;
-            border: 3px solid white;
-            position: relative;
-        }
-
-        .image-placeholder img {
-            width: 100%;
-            height: auto;
-            display: block;
-            transition: transform 0.5s ease;
-        }
-
-        .image-placeholder:hover img {
-            transform: scale(1.02);
-        }
-
-        .placeholder-text {
-            background: linear-gradient(135deg, #ffd9d9, #ffe4e4);
-            padding: 40px;
-            text-align: center;
-            color: #a14b4b;
-            font-size: 1.2rem;
-            border-radius: 15px;
-            border: 2px dashed #d44b4b;
-        }
-
-        .placeholder-text i {
-            font-size: 3rem;
-            margin-bottom: 15px;
-            color: #d44b4b;
-        }
-
-        /* Layout helpers */
-        .flex-row {
+        /* Layout 2 cột */
+        .two-column {
             display: flex;
             align-items: center;
-            gap: 40px;
+            gap: 50px;
             flex-wrap: wrap;
         }
 
-        .text-center {
-            text-align: center;
+        .text-column {
+            flex: 1;
+            min-width: 300px;
         }
 
-        /* Controls */
-        .nav-controls {
+        .image-column {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        /* Typography */
+        h1, h2, h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+
+        .main-title {
+            font-size: 4.5rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, #b8860b, #daa520, #ffd700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+            line-height: 1.2;
+            text-shadow: 2px 2px 4px rgba(255,255,255,0.5);
+            opacity: 0;
+            animation: typing 1.5s steps(30, end) forwards;
+            overflow: hidden;
+            white-space: nowrap;
+            width: 0;
+            animation: typing 2s steps(30, end) forwards;
+        }
+
+        @keyframes typing {
+            from { width: 0; opacity: 1; }
+            to { width: 100%; opacity: 1; }
+        }
+
+        .couple-names {
+            font-size: 3rem;
+            font-weight: 500;
+            color: #8b5a5a;
+            margin-bottom: 20px;
+            letter-spacing: 3px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: slideUpText 1s ease forwards 0.5s;
+        }
+
+        @keyframes slideUpText {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .wedding-date {
+            font-size: 2rem;
+            font-weight: 400;
+            color: #c97b7b;
+            border-top: 2px solid #ffd700;
+            border-bottom: 2px solid #ffd700;
+            display: inline-block;
+            padding: 10px 30px;
+            margin-top: 20px;
+            opacity: 0;
+            transform: scale(0.8);
+            animation: scaleIn 1s ease forwards 1s;
+        }
+
+        @keyframes scaleIn {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .speech-text {
+            font-size: 1.5rem;
+            line-height: 1.6;
+            font-weight: 300;
+            color: #5a4a4a;
+            font-style: italic;
+            position: relative;
+            padding: 20px 30px;
+            background: rgba(255,255,255,0.5);
+            border-radius: 20px;
+            border-left: 5px solid #ffd700;
+            opacity: 0;
+            transform: translateX(-20px);
+            animation: slideInText 1s ease forwards;
+        }
+
+        @keyframes slideInText {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .speech-text i {
+            color: #ffd700;
+            margin-right: 10px;
+            font-size: 2rem;
+            opacity: 0.7;
+            animation: bounceIcon 2s infinite;
+        }
+
+        @keyframes bounceIcon {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .groom-name, .bride-name {
+            font-size: 2.5rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, #8b5a5a, #c97b7b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: slideUpText 1s ease forwards 0.3s;
+        }
+
+        /* Image styles với hiệu ứng */
+        .image-frame {
+            width: 100%;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1), 0 10px 20px rgba(255,215,0,0.1);
+            border: 5px solid white;
+            opacity: 0;
+            transform: scale(0.9);
+            animation: zoomInImage 1.2s ease forwards 0.3s;
+        }
+                /* Image styles với hiệu ứng */
+        .image-frame_1 {
+            width: 100%;
+            max-height: 500px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1), 0 10px 20px rgba(255,215,0,0.1);
+            border: 5px solid white;
+            opacity: 0;
+            transform: scale(0.9);
+            animation: zoomInImage 1.2s ease forwards 0.3s;
+        }
+
+        @keyframes zoomInImage {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .image-frame img {
+            width: 100%;
+            height: 100%;        /* Thêm dòng này */
+            object-fit: cover;   /* Thêm dòng này - giúp ảnh phủ kín khung mà không bị méo */
+            height: auto;
+            display: block;
+            transition: transform 8s ease;
+            animation: slowZoom 20s infinite alternate;
+        }
+
+        @keyframes slowZoom {
+            from { transform: scale(1); }
+            to { transform: scale(1.1); }
+        }
+
+        .image-frame:hover img {
+            animation-play-state: paused;
+        }
+
+        /* Ảnh banner 16:9 */
+        .banner-image {
+            width: 100%;
+            aspect-ratio: 16/9;
+            border-radius: 20px;
+            overflow: hidden;
+            opacity: 0;
+            transform: scale(0.9);
+            animation: zoomInImage 1.2s ease forwards 0.3s;
+        }
+
+        .banner-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            animation: slowZoom 20s infinite alternate;
+        }
+
+        /* Navigation */
+        .nav-container {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
             display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 30px;
-            padding: 20px 0 30px;
-            background: white;
+            gap: 15px;
+            z-index: 1000;
+            background: rgba(255,255,255,0.8);
+            backdrop-filter: blur(10px);
+            padding: 12px 20px;
+            border-radius: 50px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,215,0,0.3);
         }
 
         .nav-btn {
-            background: white;
-            border: none;
-            width: 60px;
-            height: 60px;
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
+            background: white;
+            border: 2px solid #ffd700;
+            color: #b8860b;
             cursor: pointer;
-            font-size: 1.8rem;
-            color: #b34b4b;
-            box-shadow: 0 5px 15px rgba(212, 75, 75, 0.2);
             transition: all 0.3s ease;
-            border: 2px solid #ffdbdb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
         }
 
         .nav-btn:hover {
-            background: #d44b4b;
+            background: #ffd700;
             color: white;
-            border-color: #d44b4b;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(212, 75, 75, 0.4);
+            transform: scale(1.1);
         }
 
-        .dots-container {
-            display: flex;
-            gap: 15px;
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            pointer-events: none;
         }
 
-        .dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: #ffc2c2;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
+        /* Progress bar */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #ffd700, #ffb6b6);
+            z-index: 1000;
+            transform-origin: 0% 50%;
+            animation: progress 5s linear infinite;
         }
 
-        .dot.active {
-            background: #d44b4b;
-            transform: scale(1.3);
-            box-shadow: 0 0 15px #d44b4b;
+        @keyframes progress {
+            0% { transform: scaleX(0); }
+            100% { transform: scaleX(1); }
         }
 
-        .dot:hover {
-            background: #ff8a8a;
-        }
-
-        /* Slide specific backgrounds */
-        #slide1 {
-            background: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80') center/cover;
-        }
-        #slide2 {
-            background: url('https://images.unsplash.com/photo-1523438885200-e635ba2c371e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80') center/cover;
-        }
-        #slide3 {
-            background: url('https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80') center/cover;
-        }
-        #slide4 {
-            background: url('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80') center/cover;
-        }
-        #slide5 {
-            background: url('https://images.unsplash.com/photo-1469371670807-013ccf25f16a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80') center/cover;
-        }
-
-        /* Heart animation */
-        .heart {
+        /* Decorative elements */
+        .floating-heart {
             position: absolute;
-            font-size: 20px;
-            color: #d44b4b;
-            opacity: 0.3;
-            animation: float 6s infinite;
-            z-index: 0;
+            color: rgba(255,182,193,0.2);
+            font-size: 2rem;
+            pointer-events: none;
+            z-index: 1;
+            animation: floatAround 20s linear infinite;
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(10deg); }
+        @keyframes floatAround {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            25% {
+                transform: translate(100px, -100px) rotate(90deg);
+            }
+            50% {
+                transform: translate(200px, 0) rotate(180deg);
+            }
+            75% {
+                transform: translate(100px, 100px) rotate(270deg);
+            }
+            100% {
+                transform: translate(0, 0) rotate(360deg);
+            }
         }
 
         /* Responsive */
         @media (max-width: 768px) {
-            .slide {
-                padding: 30px 20px;
+            .main-title {
+                font-size: 2.5rem;
+                white-space: normal;
+                animation: none;
+                width: 100%;
+                opacity: 1;
             }
-            .slide-title {
-                font-size: 2.2rem;
+            .couple-names {
+                font-size: 1.8rem;
             }
-            .slide-content, .slide-narration {
-                max-width: 100%;
+            .wedding-date {
+                font-size: 1.2rem;
+            }
+            .speech-text {
                 font-size: 1.1rem;
                 padding: 15px;
             }
-            .flex-row {
+            .two-column {
                 flex-direction: column;
                 gap: 20px;
             }
+            .content-container {
+                padding: 20px;
+                max-height: 90vh;
+                overflow-y: auto;
+            }
+            .nav-container {
+                bottom: 15px;
+                right: 15px;
+                padding: 8px 12px;
+            }
+            .nav-btn {
+                width: 35px;
+                height: 35px;
+            }
+        }
+
+        /* Hiệu ứng đặc biệt cho text */
+        .text-highlight {
+            background: linear-gradient(120deg, rgba(255,215,0,0.1), rgba(255,182,193,0.1));
+            padding: 0 5px;
+            animation: highlight 3s infinite;
+        }
+
+        @keyframes highlight {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* Pause animation khi không active */
+        .slide:not(.active) .image-frame img,
+        .slide:not(.active) .banner-image img {
+            animation-play-state: paused;
+        }
+
+        .slide:not(.active) .main-title,
+        .slide:not(.active) .couple-names,
+        .slide:not(.active) .wedding-date,
+        .slide:not(.active) .speech-text,
+        .slide:not(.active) .groom-name,
+        .slide:not(.active) .bride-name {
+            animation: none;
+            opacity: 0;
         }
     </style>
 </head>
 <body>
-    <div class="slideshow-container">
-        <div class="decor-top"></div>
-        <div class="decor-corner decor-corner-tl"></div>
-        <div class="decor-corner decor-corner-br"></div>
-        
-        <!-- Floating hearts -->
-        <div class="heart" style="top: 10%; left: 5%;"><i class="fas fa-heart"></i></div>
-        <div class="heart" style="top: 20%; right: 8%; font-size: 30px;"><i class="fas fa-heart"></i></div>
-        <div class="heart" style="bottom: 15%; left: 10%; font-size: 25px;"><i class="fas fa-heart"></i></div>
-        <div class="heart" style="bottom: 25%; right: 15%;"><i class="fas fa-heart"></i></div>
+    <div class="wedding-site">
+        <!-- Progress bar -->
+        <div class="progress-bar"></div>
 
-        <div class="slides-wrapper">
-            <!-- Slide 1: Khởi đầu định mệnh -->
-            <div class="slide active" id="slide1">
-                <h2 class="slide-title">Mọi chuyện bắt đầu từ một khoảnh khắc...</h2>
-                <div class="flex-row">
-                    <div class="image-placeholder">
-                        <img src="https://images.unsplash.com/photo-1444703686981-a3abbc4d4fe3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="Bình minh trên con đường">
+        <div class="slides-container" id="slidesContainer">
+            <!-- Page 1: Lễ thành hôn -->
+            <div class="slide active" id="page1">
+                <div class="content-container text-center" style="text-align: center;">
+                    <h1 class="main-title">LỄ THÀNH HÔN</h1>
+                    <h2 class="couple-names">ĐINH TRỌNG HÙNG & LƯƠNG THANH HUYỀN</h2>
+                    <div class="banner-image" style="margin: 30px 0;">
+                        <img src="9.jpg" alt="Cô dâu chú rể">
                     </div>
-                    <div class="slide-narration">
-                        <i class="fas fa-quote-left" style="color: #d44b4b; opacity: 0.5; margin-right: 10px;"></i>
-                        Có những cuộc gặp gỡ tưởng chừng tình cờ, nhưng lại được sắp đặt bởi định mệnh.
-                    </div>
-                </div>
-                <div class="slide-content">
-                    <i class="fas fa-sun" style="color: #ff8a8a; margin-right: 10px;"></i>
-                    Khi bình minh len lỏi qua những tán cây, một con đường mở ra - con đường dẫn chúng ta đến với nhau.
+                    <div class="wedding-date">29 - 03 - 2026</div>
                 </div>
             </div>
 
-            <!-- Slide 2: Lần gặp gỡ đầu tiên -->
-            <div class="slide" id="slide2">
-                <h2 class="slide-title">Ánh mắt đầu tiên</h2>
-                <div class="flex-row" style="justify-content: flex-end;">
-                    <div class="slide-narration" style="max-width: 60%;">
-                        <i class="fas fa-quote-left" style="color: #d44b4b; opacity: 0.5; margin-right: 10px;"></i>
-                        Từ khoảnh khắc ấy, hai trái tim đã tìm thấy nhịp đập chung.
-                    </div>
-                </div>
-                <div class="flex-row">
-                    <div class="image-placeholder" style="max-width: 400px;">
-                        <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="Ánh mắt đầu tiên">
-                    </div>
-                    <div class="slide-content" style="max-width: 300px;">
-                        <i class="fas fa-eye" style="color: #d44b4b; margin-right: 10px;"></i>
-                        Một ánh nhìn, một nụ cười... và thế giới ngừng quay.
+            <!-- Page 2: Giới thiệu chú rể -->
+            <div class="slide" id="page2">
+                <div class="content-container">
+                    <div class="two-column">
+                        <div class="text-column">
+                            <h2 class="groom-name">Chú rể</h2>
+                            <div class="speech-text">
+                                <i class="fas fa-quote-left"></i>
+                                Xin chào tất cả mọi người, con là chú rể Đinh Trọng Hùng
+                            </div>
+                        </div>
+                        <div class="image-column">
+                            <div class="image-frame">
+                                <img src="chu_re.jpg" alt="Chú rể">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Slide 3: Hành trình yêu thương -->
-            <div class="slide" id="slide3">
-                <h2 class="slide-title">Tình yêu lớn dần</h2>
-                <div class="flex-row">
-                    <div class="slide-narration">
-                        <i class="fas fa-quote-left" style="color: #d44b4b; opacity: 0.5; margin-right: 10px;"></i>
-                        Qua tháng ngày, tình yêu không chỉ là cảm xúc, mà còn là sự đồng hành, sẻ chia và nâng đỡ.
-                    </div>
-                </div>
-                <div class="flex-row" style="justify-content: space-between;">
-                    <div class="image-placeholder" style="max-width: 200px;">
-                        <img src="https://images.unsplash.com/photo-1529333320936-e2193f4e3b32?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="Kỷ niệm">
-                    </div>
-                    <div class="image-placeholder" style="max-width: 200px;">
-                        <img src="https://images.unsplash.com/photo-1511895426328-dc8714191300?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="Chuyến đi">
-                    </div>
-                    <div class="image-placeholder" style="max-width: 200px;">
-                        <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="Khoảnh khắc đời thường">
-                    </div>
-                </div>
-                <div class="slide-content" style="margin-top: 20px;">
-                    <i class="fas fa-heart" style="color: #d44b4b;"></i> Những nụ cười <i class="fas fa-heart" style="color: #d44b4b; margin-left: 15px;"></i> Những chuyến đi <i class="fas fa-heart" style="color: #d44b4b; margin-left: 15px;"></i> Những ngày bình yên
-                </div>
-            </div>
-
-            <!-- Slide 4: Lời hứa trọn đời -->
-            <div class="slide" id="slide4">
-                <h2 class="slide-title">Chọn nhau – cho cả cuộc đời</h2>
-                <div class="flex-row" style="justify-content: center;">
-                    <div class="image-placeholder" style="max-width: 500px;">
-                        <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="Đôi tay nắm chặt">
-                    </div>
-                </div>
-                <div class="flex-row" style="justify-content: space-between; margin-top: 20px;">
-                    <div class="slide-narration" style="max-width: 60%;">
-                        <i class="fas fa-quote-left" style="color: #d44b4b; opacity: 0.5; margin-right: 10px;"></i>
-                        Hôm nay, trước gia đình và bạn bè, họ chọn nhau – không chỉ cho một ngày, mà cho cả cuộc đời.
-                    </div>
-                    <div class="slide-content" style="max-width: 30%;">
-                        <i class="fas fa-ring" style="color: #d44b4b; font-size: 2rem;"></i>
-                        <p style="margin-top: 10px;">Lời hứa vĩnh cửu</p>
+            <!-- Page 3: Giới thiệu cô dâu -->
+            <div class="slide" id="page3">
+                <div class="content-container">
+                    <div class="two-column">
+                        <div class="image-column">
+                            <div class="image-frame">
+                                <img src="co_dau.jpg" alt="Cô dâu">
+                            </div>
+                        </div>
+                        <div class="text-column">
+                            <h2 class="bride-name">Cô dâu</h2>
+                            <div class="speech-text">
+                                <i class="fas fa-quote-left"></i>
+                                Xin chào tất cả mọi người, con là cô dâu Lương Thanh Huyền
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Slide 5: Cao trào & Xuất hiện -->
-            <div class="slide" id="slide5">
-                <h2 class="slide-title" style="font-size: 4rem; color: #a13b3b;">Nhân vật chính của câu chuyện</h2>
-                <div class="flex-row" style="justify-content: center; text-align: center;">
-                    <div class="slide-narration" style="max-width: 80%; font-size: 2rem; background: rgba(255,255,255,0.9);">
-                        <i class="fas fa-quote-left" style="color: #d44b4b; opacity: 0.5;"></i>
-                        Và giờ đây, hãy cùng chào đón cô dâu và chú rể – nhân vật chính của câu chuyện tình yêu này.
+            <!-- Page 4: Lời đầu tiên -->
+            <div class="slide" id="page4">
+                <div class="content-container">
+                    <div class="two-column">
+                        <div class="text-column">
+                            <div class="speech-text">
+                                <i class="fas fa-quote-left"></i>
+                                Chúng con xin gửi lời chào trân trọng tới ông bà, cha mẹ, cô dì chú bác, anh chị em, những người bạn, đồng nghiệp, hàng xóm láng giềng hai bên gia đình đã có mặt trong tiệc cưới ngày hôm nay
+                            </div>
+                        </div>
+                        <div class="image-column">
+                            <div class="image-frame">
+                                <img src="2.jpg" alt="Cô dâu chú rể">
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div style="text-align: center; margin-top: 40px;">
-                    <i class="fas fa-star" style="color: #ffd700; font-size: 2rem; margin: 0 10px;"></i>
-                    <i class="fas fa-heart" style="color: #d44b4b; font-size: 3rem;"></i>
-                    <i class="fas fa-star" style="color: #ffd700; font-size: 2rem; margin: 0 10px;"></i>
+            </div>
+
+            <!-- Page 5: Lời cảm ơn -->
+            <div class="slide" id="page5">
+                <div class="content-container">
+                    <div class="two-column">
+                        <div class="image-column">
+                            <div class="image-frame">
+                                <img src="3.png" alt="Cô dâu chú rể">
+                            </div>
+                        </div>
+                        <div class="text-column">
+                            <div class="speech-text">
+                                <i class="fas fa-quote-left"></i>
+                                Chúng con xin gửi lời cảm ơn sâu sắc tới tất cả mọi người vì đã không ngại thời tiết, quãng đường xa xôi, đã sắp xếp công việc và dành thời gian quý báu đến chung vui và chúc phúc cho vợ chồng chúng con.
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="slide-content text-center" style="max-width: 100%; background: transparent; border: none;">
-                    <p style="font-size: 2.5rem; font-weight: 600; color: #8b3a3a;">✨ CHÚ RỂ & CÔ DÂU ✨</p>
+            </div>
+
+            <!-- Page 6: Cảm ơn bố mẹ -->
+            <div class="slide" id="page6">
+                <div class="content-container">
+                    <div class="two-column">
+                        <div class="text-column">
+                            <div class="speech-text">
+                                <i class="fas fa-quote-left"></i>
+                                Con cảm ơn bố mẹ đã sinh thành, dưỡng dục con trở thành một người đàn ông bản lĩnh và biết yêu thương mọi người. Con cảm ơn bố mẹ vợ đã mang đến cho con người phụ nữ tuyệt vời nhất thế gian.
+                            </div>
+                        </div>
+                        <div class="image-column">
+                            <div class="image-frame">
+                                <img src="4.jpg" alt="Chân dung">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Page 7: Cảm ơn vợ -->
+            <div class="slide" id="page7">
+                <div class="content-container">
+                    <div class="two-column">
+                        <div class="image-column">
+                            <div class="image-frame">
+                                <img src="5.jpg" alt="Cô dâu chú rể">
+                            </div>
+                        </div>
+                        <div class="text-column">
+                            <div class="speech-text">
+                                <i class="fas fa-quote-left"></i>
+                                Anh cảm ơn vợ đã lựa chọn và chấp nhận đồng hành cùng anh trên chặng đường hạnh phúc từ giờ cho đến mãi về sau.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Page 8: Lời tình yêu -->
+            <div class="slide" id="page8">
+                <div class="content-container">
+                    <div class="two-column">
+                        <div class="text-column">
+                            <div class="speech-text">
+                                <i class="fas fa-quote-left"></i>
+                                Ngày hôm nay thật tuyệt vời và hạnh phúc. Tình yêu của chúng con, trải qua thời gian tìm hiểu và vun đắp, nay đã đủ lớn để tiến tới hôn nhân trong sự chứng kiến của tất cả mọi người.
+                            </div>
+                        </div>
+                        <div class="image-column">
+                            <div class="image-frame">
+                                <img src="6.jpg" alt="Đôi tay">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Page 9: Lời hứa -->
+            <div class="slide" id="page9">
+                <div class="content-container">
+                    <div class="two-column">
+                        <div class="image-column">
+                            <div class="image-frame">
+                                <img src="7.jpg" alt="Hạnh phúc">
+                            </div>
+                        </div>
+                        <div class="text-column">
+                            <div class="speech-text">
+                                <i class="fas fa-quote-left"></i>
+                                Chúng con sẽ luôn trân trọng tình cảm của mọi người dành cho chúng con.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Page 10: Lời thề -->
+            <div class="slide" id="page10">
+                <div class="content-container">
+                    <div class="two-column">
+                        <div class="text-column">
+                            <div class="speech-text">
+                                <i class="fas fa-quote-left"></i>
+                                Và, dẫu chặng đường sau này có dễ dàng hay khó khăn, khỏe mạnh hay đau ốm, anh sẽ luôn yêu thương, san sẻ, cảm thông và là bờ vai vững chắc để cho em tựa vào!
+                            </div>
+                        </div>
+                        <div class="image-column">
+                            <div class="image-frame">
+                                <img src="8.jpg" alt="Lời thề">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Page 11: Cảm ơn cuối -->
+            <div class="slide" id="page11">
+                <div class="content-container">
+                    <div class="two-column">
+                        <div class="image-column">
+                            <div class="image-frame">
+                                <img src="1.jpg" alt="Cảm ơn">
+                            </div>
+                        </div>
+                        <div class="text-column">
+                            <div class="speech-text">
+                                <i class="fas fa-quote-left"></i>
+                                Một lần nữa, chúng con xin được bày tỏ lòng biết ơn sâu sắc tới hai bên gia đình, tới bạn bè đồng nghiệp và hàng xóm láng giềng. Chúng con xin được gửi lời chúc tốt đẹp nhất tới tất cả mọi người!
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Page 12: Kết thúc -->
+            <div class="slide" id="page12">
+                <div class="content-container text-center" style="text-align: center;">
+                    <h1 class="main-title">LỄ THÀNH HÔN</h1>
+                    <h2 class="couple-names">ĐINH TRỌNG HÙNG & LƯƠNG THANH HUYỀN</h2>
+                    <div class="banner-image" style="margin: 30px 0;">
+                        <img src="9.jpg" alt="Cô dâu chú rể">
+                    </div>
+                    <div class="wedding-date">29 - 03 - 2026</div>
                 </div>
             </div>
         </div>
 
-        <!-- Navigation controls -->
-        <div class="nav-controls">
-            <button class="nav-btn" id="prevBtn"><i class="fas fa-chevron-left"></i></button>
-            <div class="dots-container" id="dotsContainer">
-                <span class="dot active" data-index="0"></span>
-                <span class="dot" data-index="1"></span>
-                <span class="dot" data-index="2"></span>
-                <span class="dot" data-index="3"></span>
-                <span class="dot" data-index="4"></span>
-            </div>
+        <!-- Navigation -->
+        <div class="nav-container">
+            <button class="nav-btn" id="prevBtn" disabled><i class="fas fa-chevron-left"></i></button>
             <button class="nav-btn" id="nextBtn"><i class="fas fa-chevron-right"></i></button>
         </div>
     </div>
@@ -465,53 +740,166 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const slides = document.querySelectorAll('.slide');
-            const dots = document.querySelectorAll('.dot');
             const prevBtn = document.getElementById('prevBtn');
             const nextBtn = document.getElementById('nextBtn');
             let currentSlide = 0;
             const totalSlides = slides.length;
+            let autoPlayInterval;
+            let progressInterval;
+            const progressBar = document.querySelector('.progress-bar');
 
-            function showSlide(index) {
-                // Loop around if out of bounds
+            // Danh sách các hiệu ứng chuyển trang
+            const transitions = [
+                'transition-fade',
+                'transition-slide-left',
+                'transition-slide-right',
+                'transition-zoom',
+                'transition-rotate',
+                'transition-flip'
+            ];
+
+            function getRandomTransition() {
+                return transitions[Math.floor(Math.random() * transitions.length)];
+            }
+
+            function showSlide(index, direction = 'next') {
                 if (index < 0) index = totalSlides - 1;
                 if (index >= totalSlides) index = 0;
 
-                // Hide all slides
+                // Xóa tất cả transition classes
                 slides.forEach(slide => {
-                    slide.classList.remove('active');
+                    transitions.forEach(t => slide.classList.remove(t));
                 });
 
-                // Show current slide
+                // Thêm transition class ngẫu nhiên cho slide mới
+                const randomTransition = getRandomTransition();
+                slides[index].classList.add(randomTransition);
+
+                // Ẩn slide hiện tại
+                slides[currentSlide].classList.remove('active');
+                
+                // Hiện slide mới
                 slides[index].classList.add('active');
 
-                // Update dots
-                dots.forEach((dot, i) => {
-                    dot.classList.toggle('active', i === index);
-                });
+                // Cập nhật nút
+                prevBtn.disabled = index === 0;
+                nextBtn.disabled = index === totalSlides - 1;
 
                 currentSlide = index;
+
+                // Reset progress bar animation
+                progressBar.style.animation = 'none';
+                progressBar.offsetHeight; // Trigger reflow
+                progressBar.style.animation = 'progress 5s linear infinite';
             }
 
-            // Event listeners for buttons
+            // Auto play
+            function startAutoPlay() {
+                autoPlayInterval = setInterval(() => {
+                    let nextIndex = currentSlide + 1;
+                    if (nextIndex >= totalSlides) {
+                        nextIndex = 0; // Quay lại trang đầu
+                    }
+                    showSlide(nextIndex);
+                }, 5000);
+            }
+
+            // Event listeners
             prevBtn.addEventListener('click', () => {
-                showSlide(currentSlide - 1);
+                clearInterval(autoPlayInterval);
+                clearInterval(progressInterval);
+                showSlide(currentSlide - 1, 'prev');
+                startAutoPlay();
             });
 
             nextBtn.addEventListener('click', () => {
-                showSlide(currentSlide + 1);
+                clearInterval(autoPlayInterval);
+                clearInterval(progressInterval);
+                showSlide(currentSlide + 1, 'next');
+                startAutoPlay();
             });
 
-            // Event listeners for dots
-            dots.forEach((dot, index) => {
-                dot.addEventListener('click', () => {
-                    showSlide(index);
+            // Keyboard navigation
+            window.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowLeft') {
+                    clearInterval(autoPlayInterval);
+                    showSlide(currentSlide - 1, 'prev');
+                    startAutoPlay();
+                } else if (e.key === 'ArrowRight') {
+                    clearInterval(autoPlayInterval);
+                    showSlide(currentSlide + 1, 'next');
+                    startAutoPlay();
+                }
+            });
+
+            // Touch events cho mobile
+            let touchStartX = 0;
+            let touchEndX = 0;
+
+            document.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+            });
+
+            document.addEventListener('touchend', (e) => {
+                touchEndX = e.changedTouches[0].screenX;
+                if (touchEndX < touchStartX - 50) {
+                    // Swipe left
+                    clearInterval(autoPlayInterval);
+                    showSlide(currentSlide + 1, 'next');
+                    startAutoPlay();
+                } else if (touchEndX > touchStartX + 50) {
+                    // Swipe right
+                    clearInterval(autoPlayInterval);
+                    showSlide(currentSlide - 1, 'prev');
+                    startAutoPlay();
+                }
+            });
+
+            // Tạo floating hearts
+            function createFloatingHeart() {
+                const heart = document.createElement('i');
+                heart.className = 'fas fa-heart floating-heart';
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.top = Math.random() * 100 + '%';
+                heart.style.fontSize = (Math.random() * 3 + 1) + 'rem';
+                heart.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                heart.style.opacity = 0.1 + Math.random() * 0.2;
+                document.body.appendChild(heart);
+
+                setTimeout(() => {
+                    heart.remove();
+                }, 20000);
+            }
+
+            // Tạo heart mỗi 3 giây
+            setInterval(createFloatingHeart, 3000);
+
+            // Start auto play
+            startAutoPlay();
+
+            // Preload next image để chuyển trang mượt hơn
+            function preloadImages() {
+                const images = [
+                    'https://images.unsplash.com/photo-1519225421980-715cb0215aed',
+                    'https://images.unsplash.com/photo-1500648767791-00dcc994a43e',
+                    'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e',
+                    'https://images.unsplash.com/photo-1519741497674-611481863552',
+                    'https://images.unsplash.com/photo-1520854221256-17451cc331bf',
+                    'https://images.unsplash.com/photo-1469371670807-013ccf25f16a',
+                    'https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8',
+                    'https://images.unsplash.com/photo-1511285560929-80b456fea0bc',
+                    'https://images.unsplash.com/photo-1522673607200-164d1b6ce486',
+                    'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2',
+                    'https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6'
+                ];
+
+                images.forEach(src => {
+                    const img = new Image();
+                    img.src = src + '?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80';
                 });
-            });
+            }
 
-            // Auto advance slides every 8 seconds (optional)
-            setInterval(() => {
-                showSlide(currentSlide + 1);
-            }, 8000);
+            preloadImages();
         });
     </script>
 </body>
